@@ -11,7 +11,7 @@ def get_version():
     The easiest way would be to just ``import pkmodel ``, but note that this
     may fail if the dependencies have not been installed yet. Instead, we've
     put the version number in a simple version_info module, that we'll import
-    here by temporarily adding the oxrse directory to the pythonpath using 
+    here by temporarily adding the oxrse directory to the pythonpath using
     sys.path.
     """
     import os
