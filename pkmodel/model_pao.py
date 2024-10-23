@@ -5,12 +5,14 @@
 # {'name': 'model1', 'Q_p1': 1.0, 'V_c': 1.0, 'V_p1': 1.0, 'CL': 1.0, 'X': 1.0, 'Dosing_Type': 'X'}
 class Model:
     """A Pharmokinetic (PK) model
+    This is a class which defines a PK model parameters by parsing the parameters from a dictionary stored within models.py file.
+    You also need to add the parameters for Dose(t) including the start and stop times for drug administration (h), duration (h) of each administration, and the frequency of administration (h).
 
     Parameters
     ----------
 
-    value: numeric, optional
-        an example parameter
+    name: string, mandatory
+    args_dict: dictionary, mandatory, you need to import this from the models.py file.
 
     """
     def __init__(self, name , args_dict):
@@ -22,6 +24,17 @@ class Model:
         self.args_dict = args_dict
 
     def add_dose_t_tophat_params(self, start_h, stop_h, duration_h, freq_h):
+        """
+        This function adds parameters to produce a tophat function to be used in creating a protocol.
+
+        Parameters
+        ----------
+        start_h: float, mandatory, start time in hours.
+        stop_h: float, mandatory, stop time in hours.
+        duration_h: float, mandatory, duration of drug administration in hours.
+        freq_h: float, mandatory, Frequency of drug administration in hours.
+
+        """
         if stop_h < start_h or stop_h == start_h:
             raise ValueError("Start time should be before the Stop time!")
         elif duration_h > freq_h:
