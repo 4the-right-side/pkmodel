@@ -5,9 +5,9 @@ name: Operating systems
 
 on:
   push:
-    branches: ["main","CI"]
+    branches: ["master","CI"]
   pull_request:
-    branches: ["main","CI"]
+    branches: ["**"]
   workflow_dispatch:
 
 jobs:
