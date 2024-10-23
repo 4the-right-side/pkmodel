@@ -4,6 +4,9 @@
 import scipy.integrate
 import matplotlib.pylab as plt
 import numpy as np
+import importlib
+import models
+importlib.reload(models)
 
 
 #The idea is there will be an args_dict with all the parameters, including the name of the function?
@@ -11,22 +14,32 @@ import numpy as np
 def dose(t, X):
     return X
 
-def rhs(t, y, Q_p1, V_c, V_p1, CL, X):
-    q_c, q_p1 = y
-    transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-    dqc_dt = dose(t, X) - q_c / V_c * CL - transition
-    dqp1_dt = transition
-    return [dqc_dt, dqp1_dt]
 
 
-args_dict = {
+args_dict = models.model2
+print(args_dict)
+"""
+
+{
     'name': 'model1',
     'Q_p1': 1.0,
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
     'X': 1.0,
+    'Sub' : False,
+    'Bolus' : True
 }
+
+"""
+
+class PK_protocol:
+    """A Pharmokinetic protocol.
+
+    Parameters
+    ----------
+    define the model system.
+    """
 
 class Model:
     """A Pharmokinetic (PK) model
@@ -43,23 +56,49 @@ class Model:
         self.args_dict = args_dict
 
 
+    def bolus_rhs(t, y, Q_p1, V_c, V_p1, CL, X):
+            q_c, q_p1 = y
+            transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
+            dqc_dt = dose(t, X) - q_c / V_c * CL - transition
+            dqp1_dt = transition
+            return [dqc_dt, dqp1_dt]
+
+    def subcut_rhs(t, y, Q_p1, V_c, V_p1, CL, X):
+            q_c, q_p1 = y
+            transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
+            dqc_dt = dose(t, X) - q_c / V_c * CL - transition
+            dqp1_dt = transition
+            return [dqc_dt, dqp1_dt]   
+
     def solve(self, t_eval, y0):
         """
         Solve the ODE using ivp model
         :param t_eval: time points as input to the solver.
         """
+        if args_dict['Sub']:
 
-        self.solution = scipy.integrate.solve_ivp(
-        fun=lambda t, y: rhs(t, y, self.args_dict['Q_p1'], 
-                             self.args_dict['V_c'], self.args_dict['V_p1'], 
-                             self.args_dict['CL'],
-                             self.args_dict['X']),
-        t_span=[t_eval[0], t_eval[-1]],
-        y0=y0, t_eval=t_eval)
-    
+            self.solution = scipy.integrate.solve_ivp(
+            fun=lambda t, y: rhs(t, y, self.args_dict['Q_p1'], 
+                                self.args_dict['V_c'], self.args_dict['V_p1'], 
+                                self.args_dict['CL'],
+                                self.args_dict['X']),
+            t_span=[t_eval[0], t_eval[-1]],
+            y0=y0, t_eval=t_eval)
+
+        elif args_dict['Bolus']:
+
+            self.solution = scipy.integrate.solve_ivp(
+            fun=lambda t, y: rhs(t, y, self.args_dict['Q_p1'], 
+                                self.args_dict['V_c'], self.args_dict['V_p1'], 
+                                self.args_dict['CL'],
+                                self.args_dict['X']),
+            t_span=[t_eval[0], t_eval[-1]],
+            y0=y0, t_eval=t_eval)
+        
     def plot(self):
         plt.plot(self.solution.t , self.solution.y[0])
         plt.show()
+
 
 
 t_eval = np.linspace(0 , 1 , 100)
