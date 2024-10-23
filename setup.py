@@ -75,6 +75,9 @@ setup(
         'dev': [
             # Flake8 for code style checking
             'flake8>=3',
+            # pytest and pytest-cov for continuous integration
+            'pytest',
+            'pytest-cov',
         ],
     },
 )
