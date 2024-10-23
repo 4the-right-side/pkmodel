@@ -42,6 +42,11 @@ if __name__ == "__main__":
     model.add_dose_t_tophat_params(10,100,1,1)
     print(model.dose_t_tophat_params)
 
+    t_eval = np.linspace(0 , 1 , 100)
+    y0 = np.array([0.0, 0.0])
+    models_to_run = ['model1', 'model1']
+    sol = Solution(models_to_run=models_to_run , t_eval=t_eval , y0=y0)
+    sol.solve()
 
 
 

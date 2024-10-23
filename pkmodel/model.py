@@ -7,6 +7,8 @@ import numpy as np
 import importlib
 import models
 importlib.reload(models)
+from solution import Solution
+#importlib.reload(solution)
 
 
 #The idea is there will be an args_dict with all the parameters, including the name of the function?
@@ -32,7 +34,7 @@ args_dict = models.model1
 
 """
 
-class Model:
+class Model_ed:
     """A Pharmokinetic (PK) model
 
     Parameters
@@ -99,9 +101,14 @@ t_eval = np.linspace(0 , 1 , 100)
 y0 = np.array([0.0, 0.0])
 models_to_run = ['model1', 'model1']
 
-sol = Solution(models_to_run=models_to_run , t_eval=t_eval , y0 = y0)
-sol.solve()
-sol.Plot()
+
+## For small testing; to be deleted later
+if __name__ == "__main__":
+    import models
+    import solution
+    sol = Solution(models_to_run=models_to_run , t_eval=t_eval , y0 = y0)
+    sol.solve()
+    sol.plot()
 
 
 
