@@ -20,7 +20,15 @@ class Model:
             raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for subcutaneous and 'Bolus' for intravenous bolus.")
         
         self.args_dict = args_dict
-        self.dose_t = 1.0
+
+    def add_dose_t_tophat_params(self, start_h, stop_h, duration_h, freq_h):
+        if stop_h < start_h or stop_h == start_h:
+            raise ValueError("Start time should be before the Stop time!")
+        elif duration_h > freq_h:
+            raise ValueError("Duration (h) should be shorter than or equal to (constant administration) the frequency of drug administration (h)")
+        else:
+            X_0 = self.args_dict['X']
+            self.dose_t_tophat_params = [start_h, stop_h, duration_h, freq_h, X_0]
 
     def __str__(self):
         return self.name + ": Parameters are: " + str(self.args_dict)
@@ -31,6 +39,8 @@ if __name__ == "__main__":
     import models
     model = Model(name = 'model1' , args_dict = models.model1)
     print(model)
+    model.add_dose_t_tophat_params(10,100,1,1)
+    print(model.dose_t_tophat_params)
 
 
 
