@@ -5,7 +5,7 @@ model1 = {
     'V_p1': 1.0,
     'CL': 1.0,
     'X': 1.0,
-    'Dosing_Type': 'X'
+    'Dosing_Type': 'Sub'
 }
 
 model2 = {
