@@ -8,10 +8,11 @@ def get_version():
     """
     Get version number from the pkmodel module.
 
-    The easiest way would be to just ``import pkmodel ``, but note that this may
-    fail if the dependencies have not been installed yet. Instead, we've put
-    the version number in a simple version_info module, that we'll import here
-    by temporarily adding the oxrse directory to the pythonpath using sys.path.
+    The easiest way would be to just ``import pkmodel ``, but note that this
+    may fail if the dependencies have not been installed yet. Instead, we've
+    put the version number in a simple version_info module, that we'll import
+    here by temporarily adding the oxrse directory to the pythonpath using
+    sys.path.
     """
     import os
     import sys
@@ -75,6 +76,9 @@ setup(
         'dev': [
             # Flake8 for code style checking
             'flake8>=3',
+            # pytest and pytest-cov for continuous integration
+            'pytest',
+            'pytest-cov',
         ],
     },
 )
