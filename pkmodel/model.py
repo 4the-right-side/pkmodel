@@ -3,6 +3,8 @@
 #
 # The idea is there will be an args_dict with all the parameters, including the name of the function?
 # {'name': 'model1', 'Q_p1': 1.0, 'V_c': 1.0, 'V_p1': 1.0, 'CL': 1.0, 'X': 1.0, 'Dosing_Type': 'X'}
+
+import warnings
 class Model:
     """A Pharmokinetic (PK) model
     This is a class which defines a PK model parameters by parsing the parameters from a dictionary stored within models.py file.
@@ -19,8 +21,26 @@ class Model:
         self.name = name
         ### Check input parameters
         if args_dict["Dosing_Type"] not in ["Sub", "Bolus"]:
-            raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for subcutaneous and 'Bolus' for intravenous bolus.")
-        
+            raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for \
+                             subcutaneous and 'Bolus' for intravenous bolus.")
+        if args_dict["Q_p1"] < 0:
+            raise ValueError("Value must be zero or positive.")
+        if args_dict["V_c"] <= 0:
+            raise ValueError("Value must be positive.")
+        if args_dict["V_p1"] <= 0:
+            raise ValueError("Value must be positive.")
+        if args_dict["CL"] < 0:
+            raise ValueError("Value must be zero or positive.")
+        if args_dict["ka"] < 0:
+            raise ValueError("Value must be zero or positive.")
+        if args_dict["ka"] > 0 and args_dict["Dosing_Type"] in ['Bolus']:
+            warnings.warn("The Bolus model you have specified does not use ka; choose 'Sub'\
+                           to add extra functionality.", UserWarning)
+        if args_dict["X"] < 0:
+            raise ValueError("Value must be positive.")
+        if args_dict["X"] > 1000:
+            warnings.warn("Really? Are you sure you want to give this dose?")
+
         self.args_dict = args_dict
         self.number_of_peripheral_compartments = 0
 
