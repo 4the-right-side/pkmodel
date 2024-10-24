@@ -17,8 +17,7 @@ class Model:
     args_dict: dictionary, mandatory, you need to import this from the models.py file.
 
     """
-    def __init__(self, name , args_dict):
-        self.name = name
+    def __init__(self, args_dict):
         ### Check input parameters
         if args_dict["Dosing_Type"] not in ["Sub", "Bolus"]:
             raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for \
@@ -82,13 +81,13 @@ class Model:
         return None
 
     def __str__(self):
-        return self.name + ": Parameters are: " + str(self.args_dict)
+        return "Parameters are: " + str(self.args_dict)
 
 
 ## For small testing; to be deleted later
 if __name__ == "__main__":
     import models
-    model = Model(name = 'model1' , args_dict = models.model1)
+    model = Model(args_dict = models.model1)
     print(model)
     model.add_dose_t_tophat_params(10,100,1,1)
 
