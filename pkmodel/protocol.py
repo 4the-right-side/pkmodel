@@ -40,12 +40,12 @@ class Protocol(Model):
 
         
     def bolus_rhs(self, t, y, Q_p1, V_c, V_p1, CL, k_a, N = 1):
-        q_c, q_p1, q_0 = y
+        q_0, q_c, q_p1 = y
         dq_0_dt = 0
         transition = N * Q_p1 * (q_c / V_c - q_p1 / V_p1)
         dqc_dt = self.dose(t) - q_c / V_c * CL - transition
         dqp1_dt = transition
-        return [ dqc_dt, dqp1_dt, dq_0_dt]
+        return [ dq_0_dt, dqc_dt, dqp1_dt]
 
     def subcut_rhs(self, t, y, Q_p1, V_c, V_p1, CL, k_a, N = 1):
         q_0 , q_c, q_p1 = y

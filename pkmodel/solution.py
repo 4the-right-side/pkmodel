@@ -26,11 +26,20 @@ class Solution(Model):
 
 
     def solve(self):
-        fig, ax = plt.subplots()
+        """
+        A function that solves the ODE system for the list of models inputed
+
+        inputs: A list of models from models.py, a numpy array of the times to solve
+        and a y0 for initial values.
+        """
+        fig_central, ax_central = plt.subplots()
+        fig_peripheral, ax_peripheral= plt.subplots()
+        ax_central.set_title('Central compartment')
+        ax_peripheral.set_title('Peripheral compartment')
+
         for model in self.models_to_run:
             print('solving model')
-            current_model = Model(name = model, args_dict= model)
-            #current_model.add_dose_t_tophat_params(10,100,1, 1)
+            current_model = Model(name = model['name'], args_dict= model)
             current_protocol = Protocol(name = "model1", args_dict = model) 
             if model['Dosing_Type'] == 'Sub':
                 print('subcutaneous model')
@@ -38,6 +47,7 @@ class Solution(Model):
                 fun=lambda t, y: current_protocol.subcut_rhs(t, y, current_model.args_dict['Q_p1'], 
                                     current_model.args_dict['V_c'], current_model.args_dict['V_p1'], 
                                     current_model.args_dict['CL'],
+                                    current_model.args_dict['ka'],
                                     current_model.args_dict['X']),
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
@@ -47,10 +57,14 @@ class Solution(Model):
                 fun=lambda t, y: current_protocol.bolus_rhs(t, y, current_model.args_dict['Q_p1'], 
                                     current_model.args_dict['V_c'], current_model.args_dict['V_p1'], 
                                     current_model.args_dict['CL'],
+                                    current_model.args_dict['ka'],
                                     current_model.args_dict['X']),
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
-            ax.plot(self.solution.t , self.solution.y[0])
+            ax_central.plot(self.solution.t , self.solution.y[1], label = current_model.name)
+            ax_peripheral.plot(self.solution.t , self.solution.y[2], label = current_model.name)
+        ax_central.legend()
+        ax_peripheral.legend()
         plt.show()
               
 if __name__ == "__main__":
