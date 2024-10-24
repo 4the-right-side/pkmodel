@@ -64,7 +64,9 @@ class Solution:
             ax_peripheral.plot(self.solution.t , self.solution.y[2], label = current_protocol.name)
         ax_central.legend()
         ax_peripheral.legend()
-        plt.show()
+        plt.savefig("ax_central.png")
+        plt.savefig("ax_peripheral.png")
+        
               
 if __name__ == "__main__":
       import models
