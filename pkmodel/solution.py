@@ -8,7 +8,7 @@ from model import Model
 from protocol import Protocol
 
 
-class Solution(Protocol):
+class Solution(Model):
     """A Pharmokinetic (PK) solution
 
     Parameters
@@ -18,10 +18,10 @@ class Solution(Protocol):
         an example paramter
 
     """
-    def __init__(self, model , t_eval, y0):
+    def __init__(self, args_dict , t_eval, y0):
+        super().__init__(args_dict)
         self.t_eval = t_eval
         self.y0 = y0
-        self.model = model
 
 
     def solve(self):
@@ -31,7 +31,7 @@ class Solution(Protocol):
         inputs: A list of models from models.py, a numpy array of the times to solve
         and a y0 for initial values.
         """
-        current_protocol = Protocol(name = model['name'], args_dict = model)
+        current_protocol = Protocol(args_dict = self.args_dict)
         if model['Dosing_Type'] == 'Sub':
             print('subcutaneous model')
             self.solution = scipy.integrate.solve_ivp(
@@ -73,10 +73,10 @@ class Solution(Protocol):
                       
 if __name__ == "__main__":
       import models
-      t_eval = np.linspace( 0 ,100 ,1000)
+      t_eval = np.linspace( 0 ,10 ,1000)
       y0 = np.array([0.0, 0.0, 0.0])
-      model = models.model1
-      sol = Solution(model = model, t_eval= t_eval , y0 = y0)
+      model = models.model2
+      sol = Solution(args_dict = model, t_eval= t_eval , y0 = y0)
       
       sol.solve() 
       sol.Plot()

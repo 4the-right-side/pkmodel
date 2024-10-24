@@ -14,8 +14,8 @@ class Protocol(Model):
         an example paramter
 
     """
-    def __init__(self, name, args_dict, start_h = 0, stop_h = 240, duration_h = 2, freq_h = 24):
-        super().__init__(name, args_dict)
+    def __init__(self,args_dict, start_h = 0, stop_h = 240, duration_h = 2, freq_h = 24):
+        super().__init__(args_dict)
         self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h)
 
     def dose(self, t):
@@ -40,7 +40,7 @@ class Protocol(Model):
 
         
     def bolus_rhs(self, t, y, Q_p1, V_c, V_p1, CL, k_a, N):
-        q_0 , q_c, q_p1 = y
+        q_0 ,q_c, q_p1 = y
         dq_0_dt = 0
         transition = N * Q_p1 * (q_c / V_c - q_p1 / V_p1)
         dqc_dt = self.dose(t) - q_c / V_c * CL - transition

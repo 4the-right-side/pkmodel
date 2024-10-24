@@ -15,8 +15,7 @@ class Model:
     args_dict: dictionary, mandatory, you need to import this from the models.py file.
 
     """
-    def __init__(self, name , args_dict):
-        self.name = name
+    def __init__(self, args_dict):
         ### Check input parameters
         if args_dict["Dosing_Type"] not in ["Sub", "Bolus"]:
             raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for subcutaneous and 'Bolus' for intravenous bolus.")
