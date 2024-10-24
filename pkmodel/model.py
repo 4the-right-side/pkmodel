@@ -39,7 +39,7 @@ class Model:
         if args_dict["X"] < 0:
             raise ValueError("Value must be positive.")
         if args_dict["X"] > 1000:
-            warnings.warn("Really? Are you sure you want to give this dose?")
+            warnings.warn("Really? Are you sure you want to give this dose?", UserWarning)
 
         self.args_dict = args_dict
         self.number_of_peripheral_compartments = 0
