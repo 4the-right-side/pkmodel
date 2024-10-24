@@ -50,7 +50,7 @@ class Solution(Model):
             t_span=[self.t_eval[0], self.t_eval[-1]],
             y0=self.y0, t_eval=self.t_eval)
         np.savez(self.args_dict['name'] , t= self.solution.t ,
-                     q0 = self.solution.y[0], qc= self.solution.y[1],  q1= self.solution.y[2])
+                     q0 = self.solution.y[0], qc= self.solution.y[1],  qp1= self.solution.y[2])
     
 
 
@@ -67,19 +67,23 @@ class Solution(Model):
         t= solution['t']
         q0 = solution['q0']
         qc = solution['qc']
-        q1 = solution['q1']
+        q1 = solution['qp1']
         fig, ax = plt.subplots()
-        ax.plot(t , qc)
-        ax.plot(t , q1)
+        ax.plot(t , qc, label = r'$q_c$')
+        ax.plot(t , q1, label = r'$q_{p1}$')
+        ax.legend(fontsize = 15)
+        ax.set_title('Solution for ' + self.args_dict['name'], fontsize = 18)
+        ax.set_xlabel('time',  fontsize = 18)
+        ax.set_ylabel('Drug Quantity (ng)',  fontsize = 18)
         ax.figure.savefig(self.args_dict['name'] + '.png')
 
-
-        
-                      
+                 
 if __name__ == "__main__":
+
       import models
       t_eval = np.linspace( 0 ,1 ,1000)
       y0 = np.array([0.0, 0, 0])
+      models_to_run = [models.model1]
       model = models.model1
       sol = Solution(args_dict = model, t_eval= t_eval , y0 = y0)
       sol.define_peripheral_compartments(1)
