@@ -2,6 +2,7 @@
 # Protocol class
 #
 from model_pao import Model
+import numpy as np
 
 class Protocol(Model):
     """A Pharmokinetic (PK) protocol
@@ -13,20 +14,36 @@ class Protocol(Model):
         an example paramter
 
     """
-    def __init__(self, name, args_dict):
+    def __init__(self, name, args_dict, start_h = 0, stop_h = 240, duration_h = 24, freq_h = 24):
         super().__init__(name, args_dict)
-    
+        self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h)
+
     def dose(self, t):
         #lets start with one top hat...
+<<<<<<< HEAD
         start_h, stop_h, duration_h, freq_h = 0, 240, 24, 24
         self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h) #Default is 10 days and administer the drug every 24 hours and the drug stays in the bosy for 24 hours.
         print(t)
         if t <= start_h:
+=======
+        start_h = self.dose_t_tophat_params[0]
+        stop_h = self.dose_t_tophat_params[1]
+        duration_h = self.dose_t_tophat_params[2]
+        freq_h = self.dose_t_tophat_params[3]
+        
+        if t < start_h:
+>>>>>>> 8ca7eb2 (fix dose(t))
             return 0
-        elif start_h < t < stop_h:
-            return self.dose_t_tophat_params[-1] 
         elif t > stop_h:
             return 0
+        else:
+            ind = np.floor(t / freq_h)
+            hours_after_dosing = (t / freq_h) - ind
+            duration_frac = duration_h / freq_h
+            if hours_after_dosing < duration_frac:
+                return self.dose_t_tophat_params[-1] # returning X
+            else:
+                return 0
 
         
     def bolus_rhs(self, t, y, Q_p1, V_c, V_p1, CL, k_a, N = 1):
@@ -47,5 +64,7 @@ class Protocol(Model):
 
 if __name__ == "__main__":
     import models 
-    model = Protocol(name = "model1", args_dict = models.model1) 
-    print(model.dose(20))
+    model = Protocol(name = "model1", args_dict = models.model1)
+    print(model.dose(0))
+    print(model.dose(25))
+    print(model.dose(24))
