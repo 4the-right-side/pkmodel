@@ -22,7 +22,7 @@ class Solution(Model):
         super().__init__(args_dict)
         self.t_eval = t_eval
         self.y0 = y0
-
+    
 
     def solve(self):
         """
@@ -49,8 +49,12 @@ class Solution(Model):
             fun=lambda t, y: current_protocol.bolus_rhs(t, y, Q_p1 , V_c , V_p1 , CL , ka , N),
             t_span=[self.t_eval[0], self.t_eval[-1]],
             y0=self.y0, t_eval=self.t_eval)
+
+        y_dose = np.zeros(self.t_eval.shape)
+        for i in range(len(self.t_eval)):
+            y_dose[i] = current_protocol.dose(self.t_eval[i])
         np.savez(self.args_dict['name'] , t= self.solution.t ,
-                     q0 = self.solution.y[0], qc= self.solution.y[1],  qp1= self.solution.y[2])
+                     q0 = self.solution.y[0], qc= self.solution.y[1],  qp1= self.solution.y[2], y_dose = y_dose)
     
 
 
@@ -76,6 +80,14 @@ class Solution(Model):
         ax.set_xlabel('time',  fontsize = 18)
         ax.set_ylabel('Drug Quantity (ng)',  fontsize = 18)
         ax.figure.savefig(self.args_dict['name'] + '.png')
+
+        fig_dose , ax_dose = plt.subplots()
+        y_dose = solution['y_dose']
+        ax_dose.set_title('Dose Function', fontsize = 18)
+        ax_dose.set_xlabel('time',  fontsize = 18)
+        ax_dose.set_ylabel('Drug Quantity (ng)',  fontsize = 18)
+        ax_dose.plot(self.t_eval , y_dose)
+        ax_dose.figure.savefig('dose_function' + '.png')
 
                  
 if __name__ == "__main__":
