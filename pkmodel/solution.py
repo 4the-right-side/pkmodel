@@ -37,21 +37,19 @@ class Solution(Model):
         param_vals = list(self.args_dict.values())
         Q_p1 , V_c , V_p1 , CL , ka = param_vals[1:6]
         N = self.number_of_peripheral_compartments
-        print(t_eval)
-        print(N)
-        if model['Dosing_Type'] == 'Sub':
+        if self.args_dict['Dosing_Type'] == 'Sub':
             print('subcutaneous model')
             self.solution = scipy.integrate.solve_ivp(
             fun=lambda t, y: current_protocol.subcut_rhs(t, y, Q_p1 , V_c , V_p1 , CL , ka , N),
             t_span=[self.t_eval[0], self.t_eval[-1]],
             y0=self.y0, t_eval=self.t_eval)
-        elif model['Dosing_Type'] == 'Bolus':
+        elif self.args_dict['Dosing_Type'] == 'Bolus':
             print('Bolus model')
             self.solution = scipy.integrate.solve_ivp(
             fun=lambda t, y: current_protocol.bolus_rhs(t, y, Q_p1 , V_c , V_p1 , CL , ka , N),
             t_span=[self.t_eval[0], self.t_eval[-1]],
             y0=self.y0, t_eval=self.t_eval)
-        np.savez(model['name'] , t= self.solution.t ,
+        np.savez(self.args_dict['name'] , t= self.solution.t ,
                      q0 = self.solution.y[0], qc= self.solution.y[1],  q1= self.solution.y[2])
     
 
@@ -65,7 +63,7 @@ class Solution(Model):
         Outputs: Will plot qc and q1 on the same graph
     
         """
-        solution = np.load(model['name'] + '.npz')
+        solution = np.load(self.args_dict['name'] + '.npz')
         t= solution['t']
         q0 = solution['q0']
         qc = solution['qc']
@@ -73,8 +71,7 @@ class Solution(Model):
         fig, ax = plt.subplots()
         ax.plot(t , qc)
         ax.plot(t , q1)
-        ax.figure.savefig('Plot for model' + model['name'])
-        plt.show()
+        ax.figure.savefig(self.args_dict['name'] + '.png')
 
 
         
