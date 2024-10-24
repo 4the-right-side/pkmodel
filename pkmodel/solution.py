@@ -4,8 +4,8 @@
 import scipy.integrate
 import numpy as np
 import matplotlib.pylab as plt
-from model import Model
-from protocol import Protocol
+from pkmodel import Model
+from pkmodel import Protocol
 
 
 class Solution(Model):

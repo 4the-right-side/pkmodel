@@ -1,7 +1,7 @@
 #
 # Protocol class
 #
-from model import Model
+from pkmodel import Model
 import numpy as np
 
 class Protocol(Model):
