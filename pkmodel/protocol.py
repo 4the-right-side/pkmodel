@@ -1,7 +1,7 @@
 #
 # Protocol class
 #
-from model_pao import Model
+from model import Model
 import numpy as np
 
 class Protocol(Model):
@@ -14,7 +14,7 @@ class Protocol(Model):
         an example paramter
 
     """
-    def __init__(self, name, args_dict, start_h = 0, stop_h = 240, duration_h = 24, freq_h = 24):
+    def __init__(self, name, args_dict, start_h = 0, stop_h = 240, duration_h = 2, freq_h = 24):
         super().__init__(name, args_dict)
         self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h)
 

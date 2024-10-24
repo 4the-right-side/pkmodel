@@ -6,7 +6,7 @@ model1 = {
     'CL': 1.0,
     'ka': 1.0,
     'X': 1.0,
-    'Dosing_Type': 'Bolus'
+    'Dosing_Type': 'Sub'
 }
 
 model2 = {

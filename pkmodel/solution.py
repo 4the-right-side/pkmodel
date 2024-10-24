@@ -4,7 +4,7 @@
 import scipy.integrate
 import numpy as np
 import matplotlib.pylab as plt
-from model_pao import Model
+from model import Model
 from protocol import Protocol
 
 
@@ -55,7 +55,7 @@ class Solution(Model):
               
 if __name__ == "__main__":
       import models
-      t_eval = np.linspace( 0 ,10 ,1000)
+      t_eval = np.linspace( 0 ,100 ,1000)
       y0 = np.array([0.0, 0.0, 0.0])
       models_to_run = [models.model1, models.model2]
       sol = Solution(name = "model1", args_dict = models.model1 , models_to_run= models_to_run, t_eval= t_eval , y0 = y0)

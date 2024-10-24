@@ -1,115 +1,59 @@
 #
 # Model class
 #
-import scipy.integrate
-import matplotlib.pylab as plt
-import numpy as np
-import importlib
-import models
-importlib.reload(models)
-from solution import Solution
-#importlib.reload(solution)
-
-
-#The idea is there will be an args_dict with all the parameters, including the name of the function?
-
-def dose(t, X):
-    return X
-
-
-
-args_dict = models.model1
-
-"""
-{
-    'name': 'model1',
-    'Q_p1': 1.0,
-    'V_c': 1.0,
-    'V_p1': 1.0,
-    'CL': 1.0,
-    'X': 1.0,
-    'Sub' : False,
-    'Bolus' : True
-}
-
-"""
-
-class Model_ed:
+# The idea is there will be an args_dict with all the parameters, including the name of the function?
+# {'name': 'model1', 'Q_p1': 1.0, 'V_c': 1.0, 'V_p1': 1.0, 'CL': 1.0, 'X': 1.0, 'Dosing_Type': 'X'}
+class Model:
     """A Pharmokinetic (PK) model
+    This is a class which defines a PK model parameters by parsing the parameters from a dictionary stored within models.py file.
+    You also need to add the parameters for Dose(t) including the start and stop times for drug administration (h), duration (h) of each administration, and the frequency of administration (h).
 
     Parameters
     ----------
 
-    value: numeric, optional
-        an example paramter
+    name: string, mandatory
+    args_dict: dictionary, mandatory, you need to import this from the models.py file.
 
     """
     def __init__(self, name , args_dict):
         self.name = name
+        ### Check input parameters
+        if args_dict["Dosing_Type"] not in ["Sub", "Bolus"]:
+            raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for subcutaneous and 'Bolus' for intravenous bolus.")
+        
         self.args_dict = args_dict
 
+    def add_dose_t_tophat_params(self, start_h, stop_h, duration_h, freq_h):
+        """
+        This function adds parameters to produce a tophat function to be used in creating a protocol.
 
-    def bolus_rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
-            q_c, q_p1 = y
-            transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-            dqc_dt = dose(t, X) - q_c / V_c * CL - transition
-            dqp1_dt = transition
-            return [dqc_dt, dqp1_dt]
+        Parameters
+        ----------
+        start_h: float, mandatory, start time in hours.
+        stop_h: float, mandatory, stop time in hours.
+        duration_h: float, mandatory, duration of drug administration in hours.
+        freq_h: float, mandatory, Frequency of drug administration in hours.
 
-    def subcut_rhs(self, t, y, Q_p1, V_c, V_p1, CL, X):
-            q_c, q_p1 = y
-            transition = Q_p1 * (q_c / V_c - q_p1 / V_p1)
-            dqc_dt = dose(t, X) - q_c / V_c * CL - transition
-            dqp1_dt = transition
-            return [dqc_dt, dqp1_dt]   
-    """
-    def solve(self, t_eval, y0):
-        if args_dict['Sub']:
+        """
+        if stop_h < start_h or stop_h == start_h:
+            raise ValueError("Start time should be before the Stop time!")
+        elif duration_h > freq_h:
+            raise ValueError("Duration (h) should be shorter than or equal to (constant administration) the frequency of drug administration (h)")
+        else:
+            X_0 = self.args_dict['X']
+            self.dose_t_tophat_params = [start_h, stop_h, duration_h, freq_h, X_0]
 
-            self.solution = scipy.integrate.solve_ivp(
-            fun=lambda t, y: self.subcut_rhs(t, y, self.args_dict['Q_p1'], 
-                                self.args_dict['V_c'], self.args_dict['V_p1'], 
-                                self.args_dict['CL'],
-                                self.args_dict['X']),
-            t_span=[t_eval[0], t_eval[-1]],
-            y0=y0, t_eval=t_eval)
-
-        elif args_dict['Bolus']:
-
-            self.solution = scipy.integrate.solve_ivp(
-            fun=lambda t, y: self.bolus_rhs(t, y, self.args_dict['Q_p1'], 
-                                self.args_dict['V_c'], self.args_dict['V_p1'], 
-                                self.args_dict['CL'],
-                                self.args_dict['X']),
-            t_span=[t_eval[0], t_eval[-1]],
-            y0=y0, t_eval=t_eval)
-        
-    def plot(self):
-        plt.plot(self.solution.t , self.solution.y[0])
-        plt.show()
-    """
-
-    
-
-
-    
-
-    
-
-
-t_eval = np.linspace(0 , 1 , 100)
-y0 = np.array([0.0, 0.0])
-models_to_run = ['model1', 'model1']
+    def __str__(self):
+        return self.name + ": Parameters are: " + str(self.args_dict)
 
 
 ## For small testing; to be deleted later
 if __name__ == "__main__":
     import models
-    import solution
-    sol = Solution(models_to_run=models_to_run , t_eval=t_eval , y0 = y0)
-    sol.solve()
-    sol.plot()
-
+    model = Model(name = 'model1' , args_dict = models.model1)
+    print(model)
+    model.add_dose_t_tophat_params(10,100,1,1)
+    print(model.dose_t_tophat_params)
 
 
 
