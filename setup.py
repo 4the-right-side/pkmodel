@@ -46,9 +46,9 @@ setup(
 
     license='MIT license',
 
-    # author='',
+    author='4the-right-side',
 
-    # author_email='',
+    author_email='callum.houghton-flory@linacre.ox.ac.uk',
 
     maintainer='Martin Robinson',
 
