@@ -1,4 +1,7 @@
 import argparse
+from model import Model
+from solution import Solution
+
 parser = argparse.ArgumentParser(
         description = 'This is the programme that will help you solve ODEs to simulate how pharmacokinetics works!',
         epilog = 'That is how you run this programme!')
