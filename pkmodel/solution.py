@@ -89,15 +89,3 @@ class Solution(Model):
         ax_dose.plot(self.t_eval , y_dose)
         ax_dose.figure.savefig('dose_function' + '.png')
 
-                 
-if __name__ == "__main__":
-
-      import models
-      t_eval = np.linspace( 0 ,10 ,10000)
-      y0 = np.array([0.0, 0, 0])
-      models_to_run = [models.model1]
-      model = models.model1
-      sol = Solution(args_dict = model, t_eval= t_eval , y0 = y0)
-      sol.define_peripheral_compartments(1)
-      sol.solve() 
-      sol.Plot()
