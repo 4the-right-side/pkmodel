@@ -8,7 +8,7 @@ from model import Model
 from protocol import Protocol
 
 
-class Solution(Model):
+class Solution:
     """A Pharmokinetic (PK) solution
 
     Parameters
@@ -18,8 +18,7 @@ class Solution(Model):
         an example paramter
 
     """
-    def __init__(self, name, args_dict, models_to_run , t_eval, y0):
-        super().__init__(name, args_dict)
+    def __init__(self, models_to_run , t_eval, y0):
         self.t_eval = t_eval
         self.y0 = y0
         self.models_to_run = models_to_run
@@ -69,9 +68,9 @@ class Solution(Model):
               
 if __name__ == "__main__":
       import models
-      t_eval = np.linspace( 0 ,100 ,1000)
+      t_eval = np.linspace( 0 ,1 ,1000)
       y0 = np.array([0.0, 0.0, 0.0])
       models_to_run = [models.model1, models.model2]
-      sol = Solution(name = "model1", args_dict = models.model1 , models_to_run= models_to_run, t_eval= t_eval , y0 = y0)
+      sol = Solution(models_to_run= models_to_run, t_eval= t_eval , y0 = y0)
       sol.solve() 
       #sol.Plot()
