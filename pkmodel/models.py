@@ -1,5 +1,5 @@
 model1 = {
-    'name': 'Intravenous Bolus model',
+    'name': 'Intravenous_Bolus_model',
     'Q_p1': 1.0,
     'V_c': 1.0,
     'V_p1': 1.0,
@@ -10,7 +10,7 @@ model1 = {
 }
 
 model2 = {
-    'name': 'Subcutaneous Model',
+    'name': 'Subcutaneous_Model',
     'Q_p1': 2.0,
     'V_c': 1.0,
     'V_p1': 1.0,
