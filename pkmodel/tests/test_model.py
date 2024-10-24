@@ -228,6 +228,10 @@ def test_values_reasonable(parameters, expect_raises):
             10, 100, 10, 1,
             ValueError,
         ),
+        (
+            10, 100, 0, 0,
+            ValueError,
+        ),
     ]
 )
 def test_top_hat_inputs(start, stop, duration, freq, expect_raises):
