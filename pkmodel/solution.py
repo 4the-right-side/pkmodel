@@ -62,10 +62,12 @@ class Solution(Model):
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
             ax_central.plot(self.solution.t , self.solution.y[1], label = current_protocol.name)
+            ax_central.legend()
+            plt.savefig("ax_central.png")
             ax_peripheral.plot(self.solution.t , self.solution.y[2], label = current_protocol.name)
-        ax_central.legend()
-        ax_peripheral.legend()
-        plt.show()
+            ax_peripheral.legend()
+            plt.savefig("ax_peripheral.png")
+        
               
 if __name__ == "__main__":
       import models
