@@ -26,12 +26,14 @@ class Solution(Model):
 
 
     def solve(self):
+        fig, ax = plt.subplots()
         for model in self.models_to_run:
             print('solving model')
             current_model = Model(name = model, args_dict= model)
             #current_model.add_dose_t_tophat_params(10,100,1, 1)
             current_protocol = Protocol(name = "model1", args_dict = model) 
             if model['Dosing_Type'] == 'Sub':
+                print('subcutaneous model')
                 self.solution = scipy.integrate.solve_ivp(
                 fun=lambda t, y: current_protocol.subcut_rhs(t, y, current_model.args_dict['Q_p1'], 
                                     current_model.args_dict['V_c'], current_model.args_dict['V_p1'], 
@@ -40,23 +42,22 @@ class Solution(Model):
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
             elif model['Dosing_Type'] == 'Bolus':
-                 self.solution = scipy.integrate.solve_ivp(
-                fun=lambda t, y: current_protocol.Bolus(t, y, current_model.args_dict['Q_p1'], 
+                print('Bolus model')
+                self.solution = scipy.integrate.solve_ivp(
+                fun=lambda t, y: current_protocol.bolus_rhs(t, y, current_model.args_dict['Q_p1'], 
                                     current_model.args_dict['V_c'], current_model.args_dict['V_p1'], 
                                     current_model.args_dict['CL'],
                                     current_model.args_dict['X']),
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
-
-    def Plot(self):
-        plt.plot(self.solution.t , self.solution.y[0])
+            ax.plot(self.solution.t , self.solution.y[0])
         plt.show()
               
 if __name__ == "__main__":
       import models
-      t_eval = np.linspace( 0 ,250 ,10000)
-      y0 = np.array([0.0, 0.0])
+      t_eval = np.linspace( 0 ,10 ,1000)
+      y0 = np.array([0.0, 0.0, 0.0])
       models_to_run = [models.model1, models.model2]
       sol = Solution(name = "model1", args_dict = models.model1 , models_to_run= models_to_run, t_eval= t_eval , y0 = y0)
       sol.solve() 
-      sol.Plot()
+      #sol.Plot()

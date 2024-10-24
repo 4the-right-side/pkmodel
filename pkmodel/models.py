@@ -4,8 +4,9 @@ model1 = {
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
+    'ka': 1.0,
     'X': 1.0,
-    'Dosing_Type': 'Sub'
+    'Dosing_Type': 'Bolus'
 }
 
 model2 = {
@@ -14,6 +15,7 @@ model2 = {
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
+    'ka': 1.0,
     'X': 1.0,
-    'Dosing_Type': 'Bolus'
+    'Dosing_Type': 'Sub'
 }
