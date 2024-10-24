@@ -20,7 +20,8 @@ class Protocol(Model):
         #lets start with one top hat...
         start_h, stop_h, duration_h, freq_h = 0, 240, 24, 24
         self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h) #Default is 10 days and administer the drug every 24 hours and the drug stays in the bosy for 24 hours.
-        if t < start_h:
+        print(t)
+        if t <= start_h:
             return 0
         elif start_h < t < stop_h:
             return self.dose_t_tophat_params[-1] 
@@ -36,6 +37,7 @@ class Protocol(Model):
         return [dqc_dt, dqp1_dt]
 
     def subcut_rhs(self, t, y, Q_p1, V_c, V_p1, CL, N = 1):
+        print(self.dose(t))
         q_c, q_p1 = y
         transition = N * Q_p1 * (q_c / V_c - q_p1 / V_p1)
         dqc_dt = self.dose(t) - q_c / V_c * CL - transition
