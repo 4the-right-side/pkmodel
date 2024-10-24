@@ -45,6 +45,14 @@ class Model:
             self.dose_t_tophat_params = [start_h, stop_h, duration_h, freq_h, X_0]
 
     def define_peripheral_compartments(self, N):
+        """
+        This function defines how many peripheral compartments. The default value is 0.
+
+        """
+        if isinstance(N, int) == False:
+            raise ValueError("The number of peripheral compartments must be an integer.")
+        if N < 0:
+            raise ValueError("The number of peripheral compartments must be greater than or equal to 0.")
         self.number_of_peripheral_compartments = N
         return None
 
@@ -58,9 +66,6 @@ if __name__ == "__main__":
     model = Model(name = 'model1' , args_dict = models.model1)
     print(model)
     model.add_dose_t_tophat_params(10,100,1,1)
-    print(model.dose_t_tophat_params)
-    model.define_peripheral_compartments(2)
-    print(model.number_of_peripheral_compartments)
 
 
 
