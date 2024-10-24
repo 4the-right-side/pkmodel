@@ -40,7 +40,10 @@ def main():
     ## Running the programme
     sol = Solution(args_dict = model, t_eval = t_eval , y0 = y0)
     sol.define_peripheral_compartments(args.num_peripheral)
-    sol.solve()
+    sol.solve(start_h = args.start_h,
+              stop_h = args.stop_h,
+              duration_h = args.duration_h,
+              freq_h = args.freq_h)
     sol.Plot()
     
 

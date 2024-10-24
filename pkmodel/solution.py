@@ -24,7 +24,7 @@ class Solution(Model):
         self.y0 = y0
     
 
-    def solve(self):
+    def solve(self, start_h = 0, stop_h = 240, duration_h = 24, freq_h = 24):
         """
         A function that solves the ODE system for the model imported
 
@@ -33,7 +33,7 @@ class Solution(Model):
 
         ouputs: saves a file with t, q0 , qc and q1 saved as numpy arrays
         """
-        current_protocol = Protocol(args_dict = self.args_dict)
+        current_protocol = Protocol(args_dict = self.args_dict, start_h = start_h, stop_h = stop_h, duration_h = duration_h, freq_h = freq_h)
         param_vals = list(self.args_dict.values())
         Q_p1 , V_c , V_p1 , CL , ka = param_vals[1:6]
         N = self.number_of_peripheral_compartments
