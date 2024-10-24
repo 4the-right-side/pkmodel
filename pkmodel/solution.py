@@ -81,7 +81,7 @@ class Solution(Model):
 if __name__ == "__main__":
 
       import models
-      t_eval = np.linspace( 0 ,1 ,1000)
+      t_eval = np.linspace( 0 ,10 ,10000)
       y0 = np.array([0.0, 0, 0])
       models_to_run = [models.model1]
       model = models.model1
