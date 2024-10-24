@@ -48,6 +48,11 @@ class Model:
         """
         This function defines how many peripheral compartments. The default value is 0.
         Assume all peripheral compartments have the same Volume and transition rate.
+
+        Parameters
+        ----------
+        N: integer, mandatory, the number of peripheral compartments.
+
         """
         if isinstance(N, int) == False:
             raise ValueError("The number of peripheral compartments must be an integer.")
