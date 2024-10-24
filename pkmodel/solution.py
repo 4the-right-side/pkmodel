@@ -30,6 +30,8 @@ class Solution(Model):
 
         inputs: A list of models from models.py, a numpy array of the times to solve
         and a y0 for initial values.
+
+        ouputs: saves a file with t, q0 , qc and q1 saved as numpy arrays
         """
         current_protocol = Protocol(args_dict = self.args_dict)
         param_vals = list(self.args_dict.values())
@@ -55,6 +57,14 @@ class Solution(Model):
 
 
     def Plot(self):
+        """
+        A function that plots the saved numpy arrays. 
+        
+        inputs: None, uses a saved numpy file from Solution.solve()
+        
+        Outputs: Will plot qc and q1 on the same graph
+    
+        """
         solution = np.load(model['name'] + '.npz')
         t= solution['t']
         q0 = solution['q0']

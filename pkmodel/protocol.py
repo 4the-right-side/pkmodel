@@ -19,7 +19,20 @@ class Protocol(Model):
         self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h)
 
     def dose(self, t):
-        #lets start with one top hat...
+        """""
+        The Dose function that drives the system. 
+
+        inputs:
+        start_h: the initial time where the model begins solving
+        stop_h : the final time where the model stops solving
+        duration_h : the length of time of the dose pulse. 
+        freq_h: the frequency at which the pulse repeats
+        Note the height of the top hat function is given by 'X' in models.py 
+
+        outputs:
+        A value either 0 or X
+
+        """""
         start_h = self.dose_t_tophat_params[0]
         stop_h = self.dose_t_tophat_params[1]
         duration_h = self.dose_t_tophat_params[2]
@@ -40,6 +53,14 @@ class Protocol(Model):
 
         
     def bolus_rhs(self, t, y, Q_p1, V_c, V_p1, CL, k_a, N):
+        """
+        The RHS of the bolus ODE system which solves the following system:
+
+        $ 
+        \frac{dq_c}{dt} = \text{Dose}(t) -\frac{q_c}{V_c} CL - Q_{p1} \big(frac{q_c}{V_c}  - frac{q_pl}{V_pl}) \big)  \n
+        \frac{dq_{p1}}{dt} = Q_{p1} \big(frac{q_c}{V_c}  - frac{q_pl}{V_pl}) \big)
+        $
+        """
         q_0 ,q_c, q_p1 = y
         dq_0_dt = 0
         transition = N * Q_p1 * (q_c / V_c - q_p1 / V_p1)
@@ -57,7 +78,7 @@ class Protocol(Model):
 
 if __name__ == "__main__":
     import models 
-    model = Protocol(name = "model1", args_dict = models.model1)
+    model = Protocol( args_dict = models.model1)
     print(model.dose(0))
     print(model.dose(25))
     print(model.dose(24))
