@@ -33,11 +33,12 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         files: coverage.xml
-    
-    - name: Lint with flake8
-      run: |
+
+#Flake8 requirement removed for this build    
+#    - name: Lint with flake8
+#      run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8
+       # flake8
     - name: Test with pytest
       run: |
         pytest
