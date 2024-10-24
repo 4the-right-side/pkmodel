@@ -39,30 +39,30 @@ class Solution(Model):
 
         for model in self.models_to_run:
             print('solving model')
-            current_model = Model(name = model['name'], args_dict= model)
-            current_protocol = Protocol(name = "model1", args_dict = model) 
+            current_protocol = Protocol(name = model['name'], args_dict = model)
+            current_protocol.define_peripheral_compartments(1)
             if model['Dosing_Type'] == 'Sub':
                 print('subcutaneous model')
                 self.solution = scipy.integrate.solve_ivp(
-                fun=lambda t, y: current_protocol.subcut_rhs(t, y, current_model.args_dict['Q_p1'], 
-                                    current_model.args_dict['V_c'], current_model.args_dict['V_p1'], 
-                                    current_model.args_dict['CL'],
-                                    current_model.args_dict['ka'],
-                                    current_model.args_dict['X']),
+                fun=lambda t, y: current_protocol.subcut_rhs(t, y, current_protocol.args_dict['Q_p1'], 
+                                    current_protocol.args_dict['V_c'], current_protocol.args_dict['V_p1'], 
+                                    current_protocol.args_dict['CL'],
+                                    current_protocol.args_dict['ka'],
+                                    current_protocol.number_of_peripheral_compartments),
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
             elif model['Dosing_Type'] == 'Bolus':
                 print('Bolus model')
                 self.solution = scipy.integrate.solve_ivp(
-                fun=lambda t, y: current_protocol.bolus_rhs(t, y, current_model.args_dict['Q_p1'], 
-                                    current_model.args_dict['V_c'], current_model.args_dict['V_p1'], 
-                                    current_model.args_dict['CL'],
-                                    current_model.args_dict['ka'],
-                                    current_model.args_dict['X']),
+                fun=lambda t, y: current_protocol.bolus_rhs(t, y, current_protocol.args_dict['Q_p1'], 
+                                    current_protocol.args_dict['V_c'], current_protocol.args_dict['V_p1'], 
+                                    current_protocol.args_dict['CL'],
+                                    current_protocol.args_dict['ka'],
+                                    current_protocol.number_of_peripheral_compartments),
                 t_span=[self.t_eval[0], self.t_eval[-1]],
                 y0=self.y0, t_eval=self.t_eval)
-            ax_central.plot(self.solution.t , self.solution.y[1], label = current_model.name)
-            ax_peripheral.plot(self.solution.t , self.solution.y[2], label = current_model.name)
+            ax_central.plot(self.solution.t , self.solution.y[1], label = current_protocol.name)
+            ax_peripheral.plot(self.solution.t , self.solution.y[2], label = current_protocol.name)
         ax_central.legend()
         ax_peripheral.legend()
         plt.show()

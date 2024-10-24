@@ -47,7 +47,7 @@ class Model:
     def define_peripheral_compartments(self, N):
         """
         This function defines how many peripheral compartments. The default value is 0.
-
+        Assume all peripheral compartments have the same Volume and transition rate.
         """
         if isinstance(N, int) == False:
             raise ValueError("The number of peripheral compartments must be an integer.")
