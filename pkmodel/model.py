@@ -22,6 +22,7 @@ class Model:
             raise ValueError("Unknown dosing type. Dosing types available are 'Sub' for subcutaneous and 'Bolus' for intravenous bolus.")
         
         self.args_dict = args_dict
+        self.number_of_peripheral_compartments = 0
 
     def add_dose_t_tophat_params(self, start_h, stop_h, duration_h, freq_h):
         """
@@ -43,6 +44,18 @@ class Model:
             X_0 = self.args_dict['X']
             self.dose_t_tophat_params = [start_h, stop_h, duration_h, freq_h, X_0]
 
+    def define_peripheral_compartments(self, N):
+        """
+        This function defines how many peripheral compartments. The default value is 0.
+
+        """
+        if isinstance(N, int) == False:
+            raise ValueError("The number of peripheral compartments must be an integer.")
+        if N < 0:
+            raise ValueError("The number of peripheral compartments must be greater than or equal to 0.")
+        self.number_of_peripheral_compartments = N
+        return None
+
     def __str__(self):
         return self.name + ": Parameters are: " + str(self.args_dict)
 
@@ -53,7 +66,6 @@ if __name__ == "__main__":
     model = Model(name = 'model1' , args_dict = models.model1)
     print(model)
     model.add_dose_t_tophat_params(10,100,1,1)
-    print(model.dose_t_tophat_params)
 
 
 
