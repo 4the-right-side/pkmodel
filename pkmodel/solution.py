@@ -64,13 +64,13 @@ class Solution:
             ax_peripheral.plot(self.solution.t , self.solution.y[2], label = current_protocol.name)
         ax_central.legend()
         ax_peripheral.legend()
-        plt.savefig("ax_central.png")
-        plt.savefig("ax_peripheral.png")
+        ax_central.figure.savefig("ax_central.png")
+        ax_peripheral.figure.savefig("ax_peripheral.png")
         
               
 if __name__ == "__main__":
       import models
-      t_eval = np.linspace( 0 ,1 ,1000)
+      t_eval = np.linspace( 0 ,100 ,1000)
       y0 = np.array([0.0, 0.0, 0.0])
       models_to_run = [models.model1, models.model2]
       sol = Solution(models_to_run= models_to_run, t_eval= t_eval , y0 = y0)
