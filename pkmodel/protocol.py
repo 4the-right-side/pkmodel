@@ -20,19 +20,12 @@ class Protocol(Model):
 
     def dose(self, t):
         #lets start with one top hat...
-<<<<<<< HEAD
-        start_h, stop_h, duration_h, freq_h = 0, 240, 24, 24
-        self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h) #Default is 10 days and administer the drug every 24 hours and the drug stays in the bosy for 24 hours.
-        print(t)
-        if t <= start_h:
-=======
         start_h = self.dose_t_tophat_params[0]
         stop_h = self.dose_t_tophat_params[1]
         duration_h = self.dose_t_tophat_params[2]
         freq_h = self.dose_t_tophat_params[3]
         
         if t < start_h:
->>>>>>> 8ca7eb2 (fix dose(t))
             return 0
         elif t > stop_h:
             return 0
