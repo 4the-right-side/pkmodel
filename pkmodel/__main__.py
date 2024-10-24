@@ -1,5 +1,6 @@
 import argparse
 import numpy as np
+from models import * ## importing all registered models
 from pkmodel import Model, Protocol, Solution
 
 parser = argparse.ArgumentParser(
@@ -23,15 +24,20 @@ parser.add_argument("-q_c_i", "--initial_central_drug_quantity", nargs = 1, defa
                     help="This option specifies the initial value of q_c [ng].")
 parser.add_argument("-q_p1_i", "--initial_peripheral_drug_quantity", nargs = 1, default = 0.0, type = float,
                     help="This option specifies the initial value of q_p1 [ng].")
+parser.add_argument("-m", "--model", nargs = 1, default = "model1", type = str,
+                    help="This specifies which model in the models.py you want to run.")
 
 def main():
+    ## Setting up the variables
+    registered_models = { "model1": model1,
+                         "model2": model2 }
     args = parser.parse_args()
-    import models
     t_eval = np.linspace(args.start_h, args.stop_h, 1000)
     y0 = np.array([args.initial_subcutaneous_drug_quantity, 
                    args.initial_central_drug_quantity, 
                    args.initial_peripheral_drug_quantity])
-    model = models.model1
+    model = registered_models[args.model]
+    ## Running the programme
     sol = Solution(args_dict = model, t_eval = t_eval , y0 = y0)
     sol.define_peripheral_compartments(args.num_peripheral)
     sol.solve()
