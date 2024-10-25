@@ -55,12 +55,8 @@ class Protocol(Model):
         """
         The RHS of the bolus ODE system which solves the following system:
 
-        .. math::
-
-            \frac{dq_c}{dt} = \text{Dose}(t) - \frac{q_c}{V_c} CL 
-            - Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right) \\
-            \frac{dq_{p1}}{dt} = Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right)
-
+        :math:`\sigma_{1}` equals :math:`\sigma_{2}`
+        
         Inputs:  
         Q_p1, V_c, V_p1, CL, k_a, N
         Note that k_a and q_0 are not used for the Bolus model. dq_0/dt = 0 for all t.
