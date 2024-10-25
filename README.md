@@ -2,6 +2,8 @@
 
 starter pk modelling repository
 
+Documentation available at: https://pkmodel-cool.readthedocs.io/en/latest/index.html
+
 ## Members
 1. Anita 
 2. Pao
