@@ -59,7 +59,9 @@ class Protocol(Model):
 
             \frac{dq_c}{dt} = \text{Dose}(t) - \frac{q_c}{V_c} CL 
             - Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right)
-
+        
+        ..math::
+            
             \frac{dq_{p1}}{dt} = Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right)
 
         Inputs:  
