@@ -30,9 +30,6 @@ import numpy.testing as npt
 def test_dose_outputs(t, expected):
     """Tests that the dose output by a given t value is that expected"""
     import pkmodel as pk
-    #How is this called later? 
-    #Is there any point at which the args_dict is fed to the model class, 
-    # or can this be bypassed for the protocol class?
     model = pk.Protocol(args_dict = {
                 'name': 'model1',
                 'Q_p1': 1.0,
