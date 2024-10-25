@@ -19,6 +19,7 @@ author = 'Pao, Callum, Ed and Anita'
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.mathjax',
 ]
 
 templates_path = ['_templates']
