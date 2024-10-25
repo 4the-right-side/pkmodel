@@ -7,7 +7,7 @@ import numpy as np
 
 def test_solve():
     import pkmodel as pk
-    model = pk.Protocol(args_dict = {
+    model = {
                 'name': 'model1',
                 'Q_p1': 1.0,
                 'V_c': 1.0,
@@ -16,7 +16,7 @@ def test_solve():
                 'X': 1.0,
                 'ka': 0,
                 'Dosing_Type': 'Bolus'
-            },)
+            }
     t_eval = np.linspace( 0 ,10 ,10000)
     y0 = np.array([0.0, 0, 0])
     sol = pk.Solution(args_dict = model, t_eval= t_eval , y0 = y0)
@@ -26,7 +26,7 @@ def test_solve():
 
 def test_plot():
     import pkmodel as pk
-    model = pk.Protocol(args_dict = {
+    model = {
                 'name': 'model1',
                 'Q_p1': 1.0,
                 'V_c': 1.0,
@@ -35,7 +35,7 @@ def test_plot():
                 'X': 1.0,
                 'ka': 0,
                 'Dosing_Type': 'Bolus'
-            },)
+            }
     t_eval = np.linspace( 0 ,10 ,10000)
     y0 = np.array([0.0, 0, 0])
     sol = pk.Solution(args_dict = model, t_eval= t_eval , y0 = y0)
@@ -43,5 +43,4 @@ def test_plot():
     sol.solve()
     sol.Plot()
     assert isfile("model1.png") == True
-
 
