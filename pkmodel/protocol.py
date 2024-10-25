@@ -37,6 +37,15 @@ class Protocol(Model):
         duration_h = self.dose_t_tophat_params[2]
         freq_h = self.dose_t_tophat_params[3]
         
+        if start_h < 0:
+            raise ValueError("starting time cannot be negative.")
+        if stop_h < 0:
+            raise ValueError("stopping time cannot be negative.")
+        if duration_h < 0 or duration_h == 0:
+            raise ValueError("duration of the drug should be a positive number.")
+        if freq_h < 0 or freq_h == 0:
+            raise ValueError("time interval between each administration should be a positive number.")
+
         if t < start_h:
             return 0
         elif t > stop_h:
@@ -95,9 +104,3 @@ class Protocol(Model):
         dqp1_dt = transition
         return [dq0_dt , dqc_dt, dqp1_dt]   
 
-if __name__ == "__main__":
-    import models 
-    model = Protocol( args_dict = models.model1)
-    print(model.dose(0))
-    print(model.dose(25))
-    print(model.dose(24))
