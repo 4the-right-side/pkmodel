@@ -20,10 +20,25 @@ import numpy.testing as npt
             100,
             1.0, #Value of X given in the args_dict
         ),
-        #hours_after_dosing >= duration frequency
+        #hours_after_dosing = duration frac
         (
             6,
+            1, #unusual, presumably because of floats
+        ),
+        #hours_after_dosing > duration frac
+        (
+            7,
             0,
+        ),
+        #hours_after_dosing < duration frac
+        (
+            5.3,
+            1,
+        ),
+        #hours_after_dosing < duration frac
+        (
+            10.3,
+            1,
         ),
     ]
 )
@@ -41,5 +56,6 @@ def test_dose_outputs(t, expected):
                 'Dosing_Type': 'Bolus'
             },)
     #This function's inputs have been checked in the previous section
-    model.add_dose_t_tophat_params(10,100,1,5)
+    model.add_dose_t_tophat_params(5,100,1,5)
+    print(model)
     npt.assert_equal(model.dose(t), expected)
