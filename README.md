@@ -1,4 +1,4 @@
-# pkmodel by 4the-right-side
+# pkmodel-4the-right-side package
 
 A new python package which models different methods of drug delivery and returns a graph  showing the drug quantity in each compartment over time.  It also provides a reference plot illustrating the dose function. The package can be easily installed using 'pip' via the command line. 
 
@@ -17,7 +17,7 @@ For further technical description of the model, documentation is available at: h
 
 At the command line, type:
 
-    pip install --upgrade -i https://test.pypi.org/simple/ pkmodel 
+    pip install --upgrade -i https://test.pypi.org/simple/ pkmodel-4the-right-side
 
 You may need to add '--upgrade' if you have already tried to install previously.
 
