@@ -29,8 +29,9 @@ class Protocol(Model):
         freq_h: the frequency at which the pulse repeats
         Note the height of the top hat function is given by 'X' in models.py 
 
-        outputs:
-        A value either 0 or X
+        Outputs
+        -------
+        A value either 0 or X at each t
 
         """""
         start_h = self.dose_t_tophat_params[0]
@@ -62,7 +63,8 @@ class Protocol(Model):
             - Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right) \\
             \frac{dq_{p1}}{dt} &= Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right)
 
-        Inputs:  
+        Parameters
+        ----------
         Q_p1, V_c, V_p1, CL, k_a, N
         Note that k_a and q_0 are not used for the Bolus model. dq_0/dt = 0 for all t.
 
@@ -84,7 +86,8 @@ class Protocol(Model):
             \frac{dq_c}{dt} &=  k_{a} q_{0} - \frac{q_c}{V_c} CL - Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right) \\
             \frac{dq_{p1}}{dt} &= Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right)
 
-        Inputs:  
+        Parameters
+        ----------
         Q_p1, V_c, V_p1, CL, k_a, N
         """
         q_0 , q_c, q_p1 = y
