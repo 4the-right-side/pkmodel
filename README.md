@@ -23,12 +23,12 @@ You may need to add '--upgrade' if you have already tried to install previously.
 
 Once installed, run the following command to see options available and their correct syntax:
 
-    python -m pkmodel-4the-right-side -h
+    python -m pkmodel -h
 
 
 To run the package, type the following command, adding appropriate settings:
 
-    python -m pkmodel-4the-right-side
+    python -m pkmodel
 
 
 ## Interpretation of graphs
