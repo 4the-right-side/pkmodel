@@ -35,7 +35,7 @@ def get_readme():
 # Go!
 setup(
     # Module name (lowercase)
-    name='pkmodel',
+    name='pkmodel-4the-right-side',
 
     # Version
     version=get_version(),
