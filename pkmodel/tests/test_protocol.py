@@ -9,29 +9,25 @@ import numpy.testing as npt
         (
             0.5,
             0,
-            None,
         ),
         #t > stop_h
         (
             101,
             0,
-            None,
         ),
         #t == stop_h == n*(freq_h)
         (
             100,
             1.0, #Value of X given in the args_dict
-            None,
         ),
         #hours_after_dosing >= duration frequency
         (
             6,
             0,
-            None,
         ),
     ]
 )
-def test_dose_outputs(t, expected, expect_raises):
+def test_dose_outputs(t, expected):
     """Tests that the dose output by a given t value is that expected"""
     import pkmodel as pk
     #How is this called later? 
@@ -50,7 +46,3 @@ def test_dose_outputs(t, expected, expect_raises):
     #This function's inputs have been checked in the previous section
     model.add_dose_t_tophat_params(10,100,1,5)
     npt.assert_equal(model.dose(t), expected)
-
-#def test_bolus_rhs(t, y, Q_p1, V_c, V_p1, CL, k_a, N):
-
-#def test_subcut_rhs(t, y, Q_p1, V_c, V_p1, CL, k_a, N):
