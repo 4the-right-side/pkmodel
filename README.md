@@ -6,7 +6,8 @@ A new python package which models different methods of drug delivery and returns
 
 "The field of Pharmacokinetics (PK) provides a quantitative basis for describing the delivery of a drug to a patient, the diffusion of that drug through the plasma/body tissue, and the subsequent clearance of the drug from the patient's system. PK is used to ensure that there is sufficient concentration of the drug to maintain the required efficacy of the drug, while ensuring that the concentration levels remain below the toxic threshold (See Fig 1)." (DTC Software Engineering Course, 2024)
 
-![Alt text](image.png)
+![image](https://github.com/user-attachments/assets/05f30c68-509f-4ad3-86b5-e6dd1e5979ce)
+
 
 For further technical description of the model, documentation is available at: https://pkmodel-cool.readthedocs.io/en/latest/index.html
 
