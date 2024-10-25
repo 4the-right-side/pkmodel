@@ -3,7 +3,7 @@ import numpy as np
 import numpy.testing as npt
 
 @pytest.mark.parametrize(
-    "t, expected, expect_raises",
+    "t, expected",
     [
         #t < start_h
         (
