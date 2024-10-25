@@ -33,7 +33,21 @@ To run the package, type the following command, adding appropriate settings:
 
 ## Interpretation of graphs
 
+Here is an example of the output for the parameters:     
+    'name': 'Intravenous_Bolus_model',
+    'Q_p1': 1.0,
+    'V_c': 1.0,
+    'V_p1': 1.0,
+    'CL': 1.0,
+    'ka': 0.0,
+    'X': 1.0,
+    'Dosing_Type': 'Bolus'
 
+![image](pkmodel/tests/Intravenous_Bolus_model.png)   
+
+with the input dosing function:
+
+![image](pkmodel/tests/dose_function.png)
 
 
 ## Members
