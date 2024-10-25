@@ -44,4 +44,3 @@ def test_plot():
     sol.Plot()
     assert isfile("model1.png") == True
 
-
