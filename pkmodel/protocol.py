@@ -11,8 +11,7 @@ class Protocol(Model):
     ----------
     need to have attributes for the possible functions and does function?
     value: numeric, optional
-        an example paramter
-
+    
     """
     def __init__(self,args_dict, start_h = 0, stop_h = 240, duration_h = 2, freq_h = 24):
         super().__init__(args_dict)
