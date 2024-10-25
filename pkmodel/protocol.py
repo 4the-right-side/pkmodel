@@ -21,7 +21,8 @@ class Protocol(Model):
         """""
         The Dose function that drives the system. 
 
-        inputs:
+        Parameters
+        ----------
         start_h: the initial time where the model begins solving
         stop_h : the final time where the model stops solving
         duration_h : the length of time of the dose pulse. 
@@ -74,6 +75,18 @@ class Protocol(Model):
         return [ dq_0_dt, dqc_dt, dqp1_dt]
 
     def subcut_rhs(self, t, y, Q_p1, V_c, V_p1, CL, k_a, N):
+        r"""
+        The RHS of the bolus ODE system which solves the following system:
+
+        .. math::
+
+            \frac{dq_0}{dt} &= \text{Dose}(t) - k_{a} q_{0} \\
+            \frac{dq_c}{dt} &=  k_{a} q_{0} - \frac{q_c}{V_c} CL - Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right) \\
+            \frac{dq_{p1}}{dt} &= Q_{p1} \left(\frac{q_c}{V_c} - \frac{q_{p1}}{V_{p1}}\right)
+
+        Inputs:  
+        Q_p1, V_c, V_p1, CL, k_a, N
+        """
         q_0 , q_c, q_p1 = y
         dq0_dt = self.dose(t) - k_a * q_0
         transition = N * Q_p1 * (q_c / V_c - q_p1 / V_p1)
