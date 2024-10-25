@@ -7,11 +7,7 @@ import numpy as np
 class Protocol(Model):
     """A Pharmokinetic (PK) protocol
 
-    Parameters
-    ----------
-    need to have attributes for the possible functions and does function?
-    value: numeric, optional
-        an example paramter
+    The protocol class is essentially a model that has a defined start and end time points as defined by dose_t_tophat_params. It also expands the functionality of the model, including dosing function and right hand side of the ODEs. 
 
     """
     def __init__(self,args_dict, start_h = 0, stop_h = 240, duration_h = 2, freq_h = 24):
@@ -38,6 +34,15 @@ class Protocol(Model):
         duration_h = self.dose_t_tophat_params[2]
         freq_h = self.dose_t_tophat_params[3]
         
+        if start_h < 0:
+            raise ValueError("starting time cannot be negative.")
+        if stop_h < 0:
+            raise ValueError("stopping time cannot be negative.")
+        if duration_h < 0 or duration_h == 0:
+            raise ValueError("duration of the drug should be a positive number.")
+        if freq_h < 0 or freq_h == 0:
+            raise ValueError("time interval between each administration should be a positive number.")
+
         if t < start_h:
             return 0
         elif t > stop_h:
@@ -82,9 +87,3 @@ class Protocol(Model):
         dqp1_dt = transition
         return [dq0_dt , dqc_dt, dqp1_dt]   
 
-if __name__ == "__main__":
-    import models 
-    model = Protocol( args_dict = models.model1)
-    print(model.dose(0))
-    print(model.dose(25))
-    print(model.dose(24))

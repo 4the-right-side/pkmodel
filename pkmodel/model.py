@@ -86,15 +86,6 @@ class Model:
         return "Parameters are: " + str(self.args_dict)
 
 
-## For small testing; to be deleted later
-if __name__ == "__main__":
-    import models
-    model = Model(args_dict = models.model1)
-    print(model)
-    model.add_dose_t_tophat_params(10,100,1,1)
-
-
-
 
 
 
