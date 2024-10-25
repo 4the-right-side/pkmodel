@@ -28,4 +28,4 @@ Solution
 
 .. autofunction:: pkmodel.Solution.solve
 
-.. autofunction:: pkmodel.Solution.plot
+.. autofunction:: pkmodel.Solution.Plot
