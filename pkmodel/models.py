@@ -4,7 +4,7 @@ model1 = {
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
-    'ka': 1.0,
+    'ka': 0.0,
     'X': 1.0,
     'Dosing_Type': 'Bolus'
 }
