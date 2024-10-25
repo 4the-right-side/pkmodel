@@ -17,7 +17,7 @@ For further technical description of the model, documentation is available at: h
 
 At the command line, type:
 
-    pip install --upgrade -i https://test.pypi.org/simple/ pkmodel-4the-right-side
+    pip install pkmodel-4the-right-side
 
 You may need to add '--upgrade' if you have already tried to install previously.
 
