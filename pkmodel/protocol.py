@@ -6,34 +6,32 @@ import numpy as np
 
 class Protocol(Model):
     """A Pharmokinetic (PK) protocol
-
-    Parameters
-    ----------
-    need to have attributes for the possible functions and does function?
-    value: numeric, optional
-    
     """
     def __init__(self,args_dict, start_h = 0, stop_h = 240, duration_h = 2, freq_h = 24):
         super().__init__(args_dict)
         self.add_dose_t_tophat_params(start_h, stop_h, duration_h, freq_h)
 
     def dose(self, t):
-        """""
+        """
         The Dose function that drives the system. 
 
         Parameters
         ----------
         start_h: the initial time where the model begins solving
-        stop_h : the final time where the model stops solving
-        duration_h : the length of time of the dose pulse. 
-        freq_h: the frequency at which the pulse repeats
-        Note the height of the top hat function is given by 'X' in models.py 
+
+        stop_h : the final time where the model stops solving 
+
+        duration_h : the length of time of the dose pulse.
+
+        freq_h: the frequency at which the pulse repeats 
+
+        Note the height of the top hat function is given by 'X' in models.py
 
         Outputs
         -------
         A value either 0 or X at each t
 
-        """""
+        """
         start_h = self.dose_t_tophat_params[0]
         stop_h = self.dose_t_tophat_params[1]
         duration_h = self.dose_t_tophat_params[2]

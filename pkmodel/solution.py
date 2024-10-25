@@ -29,11 +29,11 @@ class Solution(Model):
         Parameters
         ----------
         A list of models from models.py, a numpy array of the times to solve (t_eval)
-        and a y0 array for initial values.
+        and a y_0 array for initial values.
 
         outputs
         -------
-        saves a file with t, q0 , qc and q1 saved as numpy arrays. saves as "modelname".npz.
+        saves a file with t, q_0 , q_c and q_1 saved as numpy arrays. saves as "modelname".npz.
         """
         current_protocol = Protocol(args_dict = self.args_dict, start_h = start_h, stop_h = stop_h, duration_h = duration_h, freq_h = freq_h)
         param_vals = list(self.args_dict.values())
@@ -69,7 +69,7 @@ class Solution(Model):
         
         Outputs
         -------
-        Will plot qc and q1 on the same graph and save to a .png file
+        Will plot q_c and q_1 on the same graph and save to a .png file
     
         """
         solution = np.load(self.args_dict['name'] + '.npz')
