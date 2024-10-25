@@ -1,8 +1,9 @@
-# 4the-right-side-pkmodel
+# pkmodel by 4the-right-side
 
-A new python package which models different methods of drug delivery and returns two graphs per model showing their efficacy.  It can be easily installed using 'pip' via the command line. 
+A new python package which models different methods of drug delivery and returns a graph  showing the drug quantity in each compartment over time.  It also provides a reference plot illustrating the dose function. The package can be easily installed using 'pip' via the command line. 
 
-# Explanation of Pharmacokinetics
+
+## Explanation of Pharmacokinetics
 
 "The field of Pharmacokinetics (PK) provides a quantitative basis for describing the delivery of a drug to a patient, the diffusion of that drug through the plasma/body tissue, and the subsequent clearance of the drug from the patient's system. PK is used to ensure that there is sufficient concentration of the drug to maintain the required efficacy of the drug, while ensuring that the concentration levels remain below the toxic threshold (See Fig 1)." (DTC Software Engineering Course, 2024)
 
@@ -11,7 +12,8 @@ A new python package which models different methods of drug delivery and returns
 
 For further technical description of the model, documentation is available at: https://pkmodel-cool.readthedocs.io/en/latest/index.html
 
-# Installation and running package
+
+## Installation and running package
 
 At the command line, type:
 
@@ -24,13 +26,12 @@ Once installed, run the following command to see options available and their cor
     python -m pkmodel -h
 
 
-To run the package, type:
+To run the package, type the following command, adding appropriate settings:
 
     python -m pkmodel 
 
-adding the appropriate option settings.
 
-# Interpretation of graphs
+## Interpretation of graphs
 
 
 
