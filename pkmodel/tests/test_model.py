@@ -51,9 +51,9 @@ def test_dosing_type(parameters, expect_raises):
     import pkmodel as pk
     if expect_raises is not None:
         with pytest.raises(ValueError):
-            pk.Model(name = 'test', args_dict = parameters)
+            pk.Model(args_dict = parameters)
     else:
-        pk.Model(name = 'test', args_dict = parameters)
+        pk.Model(args_dict = parameters)
 
 @pytest.mark.parametrize(
     "parameters, expect_raises",
@@ -205,12 +205,12 @@ def test_values_reasonable(parameters, expect_raises):
     import pkmodel as pk
     if expect_raises is ValueError:
         with pytest.raises(expect_raises):
-            pk.Model(name = 'test', args_dict = parameters)
+            pk.Model(args_dict = parameters)
     elif expect_raises is not None:
         with pytest.warns(expect_raises):
-            pk.Model(name = 'test', args_dict = parameters)
+            pk.Model(args_dict = parameters)
     else:
-        pk.Model(name = 'test', args_dict = parameters)
+        pk.Model(args_dict = parameters)
 
 
 @pytest.mark.parametrize(
@@ -228,12 +228,16 @@ def test_values_reasonable(parameters, expect_raises):
             10, 100, 10, 1,
             ValueError,
         ),
+        (
+            10, 100, 0, 0,
+            ValueError,
+        ),
     ]
 )
 def test_top_hat_inputs(start, stop, duration, freq, expect_raises):
     """Test the models class can correctly assess dose frequencies are reasonable"""
     import pkmodel as pk
-    model = pk.Model(name = 'test', args_dict = {
+    model = pk.Model(args_dict = {
                 'name': 'model1',
                 'Q_p1': 1.0,
                 'V_c': 1.0,
@@ -243,9 +247,46 @@ def test_top_hat_inputs(start, stop, duration, freq, expect_raises):
                 'ka': 0,
                 'Dosing_Type': 'Bolus'
             },)
-    print(start, stop, freq, duration)
     if expect_raises is not None:
         with pytest.raises(expect_raises):
             model.add_dose_t_tophat_params(start, stop, duration, freq)
     else:
         model.add_dose_t_tophat_params(start, stop, duration, freq)
+
+@pytest.mark.parametrize(
+    "N, expect_raises",
+    [
+        (
+            10,
+            None,
+        ),
+        #Testing N >= 0
+        (
+            -1,
+            ValueError,
+        ),
+        #Testing N == int
+        (
+            10.2,
+            ValueError,
+        ),
+    ]
+)
+def test_peripheral_definition(N, expect_raises):
+    """Test the models class can correctly assess values of N are reasonable"""
+    import pkmodel as pk
+    model = pk.Model(args_dict = {
+                'name': 'model1',
+                'Q_p1': 1.0,
+                'V_c': 1.0,
+                'V_p1': 1.0,
+                'CL': 1.0,
+                'X': 1.0,
+                'ka': 0,
+                'Dosing_Type': 'Bolus'
+            },)
+    if expect_raises is not None:
+        with pytest.raises(expect_raises):
+            model.define_peripheral_compartments(N)
+    else:
+        model.define_peripheral_compartments(N)

@@ -13,9 +13,7 @@ class Solution(Model):
 
     Parameters
     ----------
-
-    value: numeric, optional
-        an example paramter
+    Inherits model paramters from the Model class
 
     """
     def __init__(self, args_dict , t_eval, y0):
@@ -28,10 +26,14 @@ class Solution(Model):
         """
         A function that solves the ODE system for the model imported
 
-        inputs: A list of models from models.py, a numpy array of the times to solve
-        and a y0 for initial values.
+        Parameters
+        ----------
+        A list of models from models.py, a numpy array of the times to solve (t_eval)
+        and a y_0 array for initial values.
 
-        ouputs: saves a file with t, q0 , qc and q1 saved as numpy arrays
+        outputs
+        -------
+        saves a file with t, q_0 , q_c and q_1 saved as numpy arrays. saves as "modelname".npz.
         """
         current_protocol = Protocol(args_dict = self.args_dict, start_h = start_h, stop_h = stop_h, duration_h = duration_h, freq_h = freq_h)
         param_vals = list(self.args_dict.values())
@@ -59,12 +61,15 @@ class Solution(Model):
 
 
     def Plot(self):
-        """
-        A function that plots the saved numpy arrays. 
+        """A function that plots the saved numpy arrays.
         
-        inputs: None, uses a saved numpy file from Solution.solve()
+        Parameters
+        ----------
+        None, uses a saved numpy file from Solution.solve()
         
-        Outputs: Will plot qc and q1 on the same graph
+        Outputs
+        -------
+        Will plot q_c and q_1 on the same graph and save to a .png file
     
         """
         solution = np.load(self.args_dict['name'] + '.npz')
@@ -89,15 +94,3 @@ class Solution(Model):
         ax_dose.plot(self.t_eval , y_dose)
         ax_dose.figure.savefig('dose_function' + '.png')
 
-                 
-if __name__ == "__main__":
-
-      import models
-      t_eval = np.linspace( 0 ,10 ,10000)
-      y0 = np.array([0.0, 0, 0])
-      models_to_run = [models.model1]
-      model = models.model1
-      sol = Solution(args_dict = model, t_eval= t_eval , y0 = y0)
-      sol.define_peripheral_compartments(1)
-      sol.solve() 
-      sol.Plot()
